@@ -6,7 +6,8 @@ import (
 )
 
 func DoesFileExistInTrash(trash_dir string, fname string) bool {
-	_, err := os.OpenFile(trash_dir+"/info/"+fname+".trashinfo", os.O_RDWR|os.O_CREATE|os.O_EXCL, 0666)
+	file, err := os.OpenFile(trash_dir+"/info/"+fname+".trashinfo", os.O_RDWR|os.O_CREATE|os.O_EXCL, 0666)
+  defer file.Close()
 	return err != nil
 }
 
