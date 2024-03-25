@@ -12,14 +12,27 @@ func main() {
 	num_args := len(os.Args[1:])
 	fmt.Println("Number of files to be trashed: ", num_args)
 
-	// Declare directory constants and create missing directories
 	functions.DirStat()
 
-	for _, fname := range os.Args[1:] {
-		abspath, err := filepath.Abs(fname)
+	for _, arg := range os.Args[1:] {
+		abspath, err := filepath.Abs(arg)
 		if err != nil {
-			panic("Unable to find absolute path for " + fname)
+			panic("Unable to find absolute path for " + arg)
 		}
-		fmt.Printf("%s\n", strings.TrimSpace(abspath))
+
+		fname := filepath.Base(strings.TrimSpace(abspath))
+		stat := functions.FileIsReadable(strings.TrimSpace(abspath))
+
+		if !stat {
+			fmt.Printf("Filename %s is not readable, Skipping ...", arg)
+			continue
+		}
+
+		trashStat := functions.DoesFileExistInTrash(functions.Trash_dir, fname)
+		if !trashStat {
+			functions.WriteFileInfo(functions.Trash_dir, fname, abspath)
+		} else {
+			fmt.Println("Hello")
+		}
 	}
 }
