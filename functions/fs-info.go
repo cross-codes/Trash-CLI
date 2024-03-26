@@ -5,13 +5,15 @@ import (
 	"time"
 )
 
-func DoesFileExistInTrash(trash_dir string, fname string) bool {
-	file, err := os.OpenFile(trash_dir+"/info/"+fname+".trashinfo", os.O_RDWR|os.O_CREATE|os.O_EXCL, 0666)
-  defer file.Close()
+// Check if a .trashinfo file corresponding to fname exists
+// If it does not exist, said .trashinfo file is created
+func ItemExistsInTrash(trash_dir string, fname string) bool {
+	_, err := os.OpenFile(trash_dir+"/info/"+fname+".trashinfo", os.O_RDWR|os.O_CREATE|os.O_EXCL, 0666)
 	return err != nil
 }
 
-func WriteFileInfo(trash_dir string, fname string, abspath string) {
+// Writes trash info content for a fname with absolute path abspath into the corresponding trash_dir
+func WriteTrashInfo(trash_dir string, fname string, abspath string) {
 	file, err := os.OpenFile(trash_dir+"/info/"+fname+".trashinfo", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		panic("Error in writing file information")

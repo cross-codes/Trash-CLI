@@ -6,7 +6,8 @@ import (
 	"strings"
 )
 
-func MoveFileToTrash(trash_dir string, fname string, abspath string) {
+// Move a given file into the corresponding trash directory
+func MoveItemToTrash(trash_dir string, fname string, abspath string) {
 	trash_path := trash_dir + "/files/" + fname
 	err := os.Rename(abspath, trash_path)
 	if err != nil {
@@ -14,7 +15,8 @@ func MoveFileToTrash(trash_dir string, fname string, abspath string) {
 	}
 }
 
-func ModifyFileName(fname string, idx int) string {
+// Attempt to create a unique indexed file/directory name
+func ModifyItemName(fname string, idx int) string {
 	if !strings.Contains(fname, ".") {
 		return fname + "." + strconv.Itoa(idx)
 	} else {
