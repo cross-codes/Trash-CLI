@@ -56,12 +56,12 @@ func trashItem(fname string, abspath string) {
 		// Keep trying to make a unique fname for the trashing process
 		idx := 2
 		for trashStat {
-			fname = functions.ModifyItemName(fname, idx)
+			fname = functions.ModifyItemBaseName(fname, idx)
 			trashStat = functions.ItemExistsInTrash(functions.Trash_dir, fname)
 			idx++
 		}
 	}
-	// Write the trashinfo and move the file into trash
+	// Write the trashinfo and move the item into trash
 	functions.WriteTrashInfo(functions.Trash_dir, fname, abspath)
 	functions.MoveItemToTrash(functions.Trash_dir, fname, abspath)
 }
