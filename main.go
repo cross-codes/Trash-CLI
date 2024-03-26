@@ -21,7 +21,7 @@ func main() {
 		}
 
 		fname := filepath.Base(strings.TrimSpace(abspath))
-		stat := functions.FileIsReadable(strings.TrimSpace(abspath))
+		stat := functions.FileIsReadable(abspath)
 
 		if !stat {
 			fmt.Printf("Filename %s is not readable, Skipping ...", arg)
@@ -31,8 +31,16 @@ func main() {
 		trashStat := functions.DoesFileExistInTrash(functions.Trash_dir, fname)
 		if !trashStat {
 			functions.WriteFileInfo(functions.Trash_dir, fname, abspath)
+			functions.MoveFileToTrash(functions.Trash_dir, fname, abspath)
 		} else {
-			fmt.Println("Hello")
+			idx := 2
+			for trashStat {
+				fname = functions.ModifyFileName(fname, idx)
+				trashStat = functions.DoesFileExistInTrash(functions.Trash_dir, fname)
+				idx++
+			}
+			functions.WriteFileInfo(functions.Trash_dir, fname, abspath)
+			functions.MoveFileToTrash(functions.Trash_dir, fname, abspath)
 		}
 	}
 }
