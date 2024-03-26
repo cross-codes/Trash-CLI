@@ -23,17 +23,29 @@ git clone https://github.com/cross-codes/Trash-CLI.git
 go build -ldflags="-s -w" -o trashput
 ```
 
-Here, you may replace `trashput` with any name of your choice. Move the newly created
-binary into `~/.local/bin` and then execute `trashput` anywhere
+Here, you may replace `trashput` with any name of your choice
+which will now be the command used to execute the application). Move the newly created
+binary into a location included in PATH such as `~/.local/bin` and then
+execute `trashput` anywhere:
+
+```bash
+trashput [FILE/DIR]...
+```
+
+The arguments can contain globbing patterns
 
 ---
 
 # Usecase
 
-This app does not have a separate retrieval functionality. It is aimed at users who
-primarily use a TUI with a file manager like `Thunar` or `Dolphin` installed.
-The app provides a convenient way to trash files and folders, but their
-restoration should be done using a file manager.
+This app is designed for users who primarily use a TUI with a file manager like
+`Thunar` or `Dolphin` installed. It provides a convenient way to trash files and
+folders. However, it does not include a separate restoration functionality.
+The decision was made to keep the scope focused on trashing files efficiently,
+while leaving the restoration process to be handled through the user's file manager.
+
+This specialization allows for a lightweight and streamlined user experience,
+especially for those accustomed to managing files primarily through graphical interfaces
 
 ---
 
